@@ -1,5 +1,5 @@
-import React from 'react';
-import { getIndent } from './utils.js';
+import React from "react";
+import { getIndent } from "./utils.js";
 export default function NormalTree(props) {
   let {
     name,
@@ -9,8 +9,9 @@ export default function NormalTree(props) {
     type,
     lineType,
     needComma,
-    level = 1
+    level = 1,
   } = props;
+  console.log("🚀 ~ file: normalTree.js:14 ~ NormalTree ~ props:", props);
 
   return (
     <p className={`c-json-p c-line-${lineType}`} style={getIndent(level)}>
@@ -19,7 +20,7 @@ export default function NormalTree(props) {
       <span className="c-json-content">
         {showIndex && <span className="c-json-key">{name}: </span>}
         <span className={`c-json-${type}`}>{value}</span>
-        <span className="c-json-comma">{needComma ? ',' : ''}</span>
+        <span className="c-json-comma">{needComma ? "," : ""}</span>
       </span>
     </p>
   );

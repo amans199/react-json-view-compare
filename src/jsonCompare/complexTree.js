@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { isArray, getIndent, getType } from './utils.js';
-import Tree from './tree.js';
+import React, { useEffect, useState } from "react";
+import { isArray, getIndent, getType } from "./utils.js";
+import Tree from "./tree.js";
 export default function ComplexTree(props) {
   let {
     name,
@@ -12,10 +12,22 @@ export default function ComplexTree(props) {
     level = 1,
     lineType,
     lastLineType,
-    lastLine = null
+    collapseIfNotEdited,
+    lastLine = null,
   } = props;
 
   let [visiable, setVisiable] = useState(true);
+
+  useEffect(() => {
+    console.log(
+      "🚀 ~ file: complexTree.js:23 ~ useEffect ~ collapseIfNotEdited:",
+      collapseIfNotEdited,
+      lineType
+    );
+    if (collapseIfNotEdited && lineType === "none") {
+      setVisiable(false);
+    }
+  }, [collapseIfNotEdited, lineType]);
 
   return (
     <div className="c-json-line">
@@ -28,16 +40,16 @@ export default function ComplexTree(props) {
         <span className={`c-of-${lineType}`}></span>
         <span className="c-json-content">
           {showIndex && <span className="c-json-key">{name}: </span>}
-          <span className="c-json-pt">{isArray(type) ? '[' : '{'}</span>
+          <span className="c-json-pt">{isArray(type) ? "[" : "{"}</span>
         </span>
         {!visiable && (
           <span className="c-json-pt">
-            {isArray(type) ? '...]' : '...}'}
-            {needComma ? ',' : ''}
+            {isArray(type) ? "...]" : "...}"}
+            {needComma ? "," : ""}
           </span>
         )}
       </p>
-      <div style={{ display: visiable ? 'block' : 'none' }}>
+      <div style={{ display: visiable ? "block" : "none" }}>
         {value.map((item, index) => (
           <Tree key={index} level={level + 1} {...item} />
         ))}
@@ -48,8 +60,8 @@ export default function ComplexTree(props) {
           {lastLine && <span className="c-json-mark">{lastLine}</span>}
           {lastLineType && <span className={`c-of-${lastLineType}`}></span>}
           <span className="c-json-pt">
-            {isArray(type) ? ']' : '}'}
-            {needComma ? ',' : ''}
+            {isArray(type) ? "]" : "}"}
+            {needComma ? "," : ""}
           </span>
         </p>
       </div>

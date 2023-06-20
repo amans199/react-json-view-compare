@@ -1,25 +1,33 @@
-import React from 'react';
-import { render } from 'react-dom';
-import JsonCompare from '../lib/index.js';
-import './style.css';
+import React from "react";
+import { render } from "react-dom";
+import JsonCompare from "../lib/index.js";
+import "./style.css";
 
 const oldData = {
-  name: 'super',
+  name: "super",
   age: 18,
   task: [
-    { name: 'eat', time: '09:00' },
-    { name: 'work', time: '10:00' },
-    { name: 'sleep', time: '22:00' },
+    { name: "eat", time: "09:00" },
+    { name: "work", time: "10:00" },
+    { name: "sleep", time: "22:00" },
   ],
 };
 const newData = {
-  name: 'coolapt',
+  name: "coolapt",
   age: 20,
   task: [
-    { name: 'eat', time: '09:00' },
-    { name: 'work', time: '10:00' },
-    { name: 'sleep', time: '23:00' },
-    { name: 'running', time: '08:00' },
+    { name: "eat", time: "09:00" },
+    {
+      name: "work",
+      time: "10:00",
+      new: {
+        name: "work",
+        time: "10:00",
+        new: { name: "work", time: "10:00" },
+      },
+    },
+    { name: "sleep", time: "23:00" },
+    { name: "running", time: "08:00" },
   ],
 };
 
@@ -37,8 +45,12 @@ function App() {
         </div>
       </div>
       <p className="title">👌The merged view:</p>
-      <JsonCompare oldData={oldData} newData={newData} />
+      <JsonCompare
+        oldData={oldData}
+        newData={newData}
+        collapseIfNotEdited={true}
+      />
     </div>
   );
 }
-render(App(), document.getElementById('root'));
+render(App(), document.getElementById("root"));
